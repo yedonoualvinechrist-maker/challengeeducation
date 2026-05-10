@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EduBattle — Défie le monde, apprends plus vite</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════════════
+     LANDING
+══════════════════════════════════════ -->
+<div id="screen-landing" class="screen active">
+  <div class="badge">⚡ Plateforme de Défis Scolaires</div>
+  <h1>EDU<br>BATTLE</h1>
+  <p class="tagline">Révise en t'affrontant. Grimpe dans le classement mondial. Prouve que tu es le meilleur de ta classe — partout dans le monde.</p>
+  <div class="btn-group">
+    <button class="btn btn-primary" onclick="showScreen('screen-register')">🚀 Créer mon compte</button>
+    <button class="btn btn-outline" onclick="showScreen('screen-login')">Connexion</button>
+  </div>
+  <div class="stats-row">
+    <div class="stat-item">
+      <div class="num" id="stat-users">0</div>
+      <div class="lbl">Élèves inscrits</div>
+    </div>
+    <div class="stat-item">
+      <div class="num" id="stat-duels">0</div>
+      <div class="lbl">Duels joués</div>
+    </div>
+    <div class="stat-item">
+      <div class="num" id="stat-quiz">0</div>
+      <div class="lbl">Quiz complétés</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     INSCRIPTION
+══════════════════════════════════════ -->
+<div id="screen-register" class="screen">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <h2>Rejoins la bataille</h2>
+      <p class="sub">Crée ton compte en quelques secondes</p>
+
+      <div class="form-group">
+        <label>Pseudo (visible par tous)</label>
+        <input type="text" id="reg-username" placeholder="ex : StarMath_Dakar" maxlength="20">
+        <div class="error-msg" id="err-username"></div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="reg-email" placeholder="ton@email.com">
+        <div class="error-msg" id="err-email"></div>
+      </div>
+      <div class="form-group">
+        <label>Mot de passe</label>
+        <input type="password" id="reg-password" placeholder="Min. 6 caractères">
+      </div>
+      <div class="form-group">
+        <label>Pays / Région</label>
+        <input type="text" id="reg-country" placeholder="ex : Bénin, France, Maroc...">
+      </div>
+      <div class="form-group">
+        <label>Classe / Filière</label>
+        <select id="reg-classe">
+          <option value="">— Sélectionne ta classe —</option>
+          <optgroup label="🏫 Collège">
+            <option value="6ème">6ème</option>
+            <option value="5ème">5ème</option>
+            <option value="4ème">4ème</option>
+            <option value="3ème">3ème</option>
+          </optgroup>
+          <optgroup label="📚 Lycée Général">
+            <option value="2nde">Seconde</option>
+            <option value="1ère A">1ère A (Lettres)</option>
+            <option value="1ère B">1ère B (Éco-Social)</option>
+            <option value="1ère C">1ère C (Maths-Physique)</option>
+            <option value="1ère D">1ère D (Maths-SVT)</option>
+            <option value="Tle A">Terminale A</option>
+            <option value="Tle B">Terminale B</option>
+            <option value="Tle C">Terminale C</option>
+            <option value="Tle D">Terminale D</option>
+          </optgroup>
+          <optgroup label="🔧 Lycée Technique & Pro">
+            <option value="CAP">CAP</option>
+            <option value="BEP">BEP</option>
+            <option value="BT">Brevet de Technicien</option>
+            <option value="BAC Tech">BAC Technologique</option>
+            <option value="BAC Pro">BAC Professionnel</option>
+          </optgroup>
+          <optgroup label="🎓 Supérieur / Pro">
+            <option value="BTS">BTS</option>
+            <option value="Licence">Licence (L1/L2/L3)</option>
+            <option value="Master">Master</option>
+            <option value="Autre">Autre filière</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Choisis ton avatar</label>
+        <div class="avatar-grid" id="avatar-grid">
+          <!-- avatars injected by JS -->
+        </div>
+      </div>
+      <div class="error-msg" id="err-global" style="margin-bottom:.8rem;"></div>
+      <button class="btn btn-primary" style="width:100%" onclick="doRegister()">Créer mon compte ⚡</button>
+      <div class="auth-switch">Déjà inscrit ? <a onclick="showScreen('screen-login')">Se connecter</a></div>
+      <div class="auth-switch" style="margin-top:.5rem;"><a onclick="showScreen('screen-landing')">← Retour</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     CONNEXION
+══════════════════════════════════════ -->
+<div id="screen-login" class="screen">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <h2>Bon retour !</h2>
+      <p class="sub">Reprends ta progression là où tu t'es arrêté</p>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="login-email" placeholder="ton@email.com">
+      </div>
+      <div class="form-group">
+        <label>Mot de passe</label>
+        <input type="password" id="login-password" placeholder="••••••••">
+      </div>
+      <div class="error-msg" id="err-login"></div>
+      <button class="btn btn-primary" style="width:100%;margin-top:1rem" onclick="doLogin()">Connexion ⚡</button>
+      <div class="auth-switch">Pas encore inscrit ? <a onclick="showScreen('screen-register')">Créer un compte</a></div>
+      <div class="auth-switch" style="margin-top:.5rem;"><a onclick="showScreen('screen-landing')">← Retour</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     APP PRINCIPALE
+══════════════════════════════════════ -->
+<div id="screen-app" class="screen">
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-brand">EDU<span>BATTLE</span></div>
+    <div class="topbar-right">
+      <div class="xp-badge">⚡ <span id="top-xp">0</span> XP</div>
+      <div class="user-pill" onclick="switchTab('profil')">
+        <span class="av" id="top-avatar">🎮</span>
+        <span id="top-username">Élève</span>
+      </div>
+      <button class="btn btn-sm btn-outline" onclick="doLogout()">Déco</button>
+    </div>
+  </div>
+
+  <!-- NAV TABS -->
+  <div class="nav-tabs">
+    <div class="nav-tab active" data-tab="dashboard" onclick="switchTab('dashboard')">🏠 Accueil</div>
+    <div class="nav-tab" data-tab="defis" onclick="switchTab('defis')">⚡ Défis</div>
+    <div class="nav-tab" data-tab="duel" onclick="switchTab('duel')">⚔️ Duel</div>
+    <div class="nav-tab" data-tab="classement" onclick="switchTab('classement')">🏆 Classement</div>
+    <div class="nav-tab" data-tab="profil" onclick="switchTab('profil')">👤 Profil</div>
+  </div>
+
+  <div class="app-content">
+
+    <!-- ── DASHBOARD ── -->
+    <div class="tab-content active" id="tab-dashboard">
+      <div class="welcome-hero">
+        <h2>Salut, <span id="dash-name">Élève</span> ! 👋</h2>
+        <p>Prêt à dominer le classement aujourd'hui ?</p>
+        <div><span class="classe-tag" id="dash-classe">—</span></div>
+        <div class="xp-bar-wrap">
+          <div class="xp-bar-label">
+            <span>Niveau <span id="dash-level">1</span></span>
+            <span id="dash-xp">0 / 200 XP</span>
+          </div>
+          <div class="xp-bar"><div class="xp-bar-fill" id="dash-xp-fill" style="width:0%"></div></div>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-title">🏆 Rang mondial</div>
+          <div class="card-big" id="dash-rank-world">—</div>
+          <div class="card-sub">dans ta classe</div>
+        </div>
+        <div class="card">
+          <div class="card-title">⚡ Série actuelle</div>
+          <div class="card-big" id="dash-streak">0</div>
+          <div class="card-sub">jours consécutifs</div>
+        </div>
+        <div class="card">
+          <div class="card-title">⚔️ Duels</div>
+          <div class="card-big" id="dash-duels-won">0</div>
+          <div class="card-sub">victoires</div>
+        </div>
+      </div>
+
+      <!-- Défi du jour -->
+      <div class="daily-card" onclick="startDailyChallenge()">
+        <div class="tag">🔥 DÉFI DU JOUR</div>
+        <h3 id="daily-title">Chargement...</h3>
+        <p id="daily-desc">Le défi quotidien t'attend !</p>
+        <div class="meta">
+          <span>⏱ 10 min</span>
+          <span>📝 5 questions</span>
+          <span id="daily-xp-label">🎯 +50 XP</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── DÉFIS ── -->
+    <div class="tab-content" id="tab-defis">
+      <div class="challenges-header">
+        <h2>Défis disponibles</h2>
+        <div class="filter-row">
+          <div class="filter-btn active" onclick="filterChallenges('tous',this)">Tous</div>
+          <div class="filter-btn" onclick="filterChallenges('quiz',this)">📝 Quiz</div>
+          <div class="filter-btn" onclick="filterChallenges('calcul',this)">🔢 Calcul</div>
+          <div class="filter-btn" onclick="filterChallenges('logique',this)">🧠 Logique</div>
+        </div>
+      </div>
+      <div class="challenge-list" id="challenge-list"></div>
+    </div>
+
+    <!-- ── DUEL ── -->
+    <div class="tab-content" id="tab-duel">
+      <div class="duel-wrap">
+        <div class="duel-header">
+          <h2>⚔️ Mode Duel</h2>
+          <p>Défie un autre élève de ta classe — le plus rapide et le plus précis gagne !</p>
+        </div>
+
+        <div class="duel-arena">
+          <div id="duel-search-section">
+            <h3 style="margin-bottom:1rem;font-size:1rem;color:var(--muted)">🔍 Cherche un adversaire</h3>
+            <div class="duel-search">
+              <input type="text" id="duel-search-input" placeholder="Pseudo de l'adversaire..." oninput="searchOpponent()">
+            </div>
+            <div id="duel-results"></div>
+            <p style="font-size:.82rem;color:var(--muted);margin-top:1rem">
+              💡 Seuls les élèves réels inscrits apparaissent ici. Les duels ne deviennent disponibles qu'une fois d'autres élèves inscrits dans ta classe.
+            </p>
+          </div>
+
+          <div id="duel-active-section" style="display:none">
+            <div class="duel-players" id="duel-players-display"></div>
+            <div id="duel-quiz-zone"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CLASSEMENT ── -->
+    <div class="tab-content" id="tab-classement">
+      <h2 style="margin-bottom:1.5rem;font-size:1.4rem;font-weight:700">🏆 Classements</h2>
+      <div class="ranking-tabs">
+        <button class="rank-tab-btn active" onclick="showRanking('mondial',this)">🌍 Mondial</button>
+        <button class="rank-tab-btn" onclick="showRanking('regional',this)">🌎 Régional</button>
+        <button class="rank-tab-btn" onclick="showRanking('local',this)">📍 Local</button>
+      </div>
+      <div class="ranking-table" id="ranking-table"></div>
+    </div>
+
+    <!-- ── PROFIL ── -->
+    <div class="tab-content" id="tab-profil">
+      <div class="profile-hero">
+        <div class="profile-av" id="prof-avatar">🎮</div>
+        <div class="profile-info">
+          <h2 id="prof-name">—</h2>
+          <div class="sub" id="prof-classe">—</div>
+          <div class="sub" id="prof-country">—</div>
+          <div class="badges-row" id="prof-badges"></div>
+        </div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="snum" id="prof-xp">0</div>
+          <div class="slbl">XP Total</div>
+        </div>
+        <div class="stat-card">
+          <div class="snum" id="prof-level">1</div>
+          <div class="slbl">Niveau</div>
+        </div>
+        <div class="stat-card">
+          <div class="snum" id="prof-quizzes">0</div>
+          <div class="slbl">Quiz</div>
+        </div>
+        <div class="stat-card">
+          <div class="snum" id="prof-duels-w">0</div>
+          <div class="slbl">Duels gagnés</div>
+        </div>
+        <div class="stat-card">
+          <div class="snum" id="prof-streak">0</div>
+          <div class="slbl">Série max</div>
+        </div>
+        <div class="stat-card">
+          <div class="snum" id="prof-rank">—</div>
+          <div class="slbl">Rang mondial</div>
+        </div>
+      </div>
+      <button class="btn btn-outline" onclick="doLogout()" style="width:100%">Se déconnecter</button>
+    </div>
+
+  </div><!-- /app-content -->
+</div><!-- /screen-app -->
+
+<!-- ══════════════════════════════════════
+     QUIZ OVERLAY
+══════════════════════════════════════ -->
+<div class="overlay" id="quiz-overlay">
+  <div class="modal" id="quiz-modal">
+    <div class="modal-header">
+      <div>
+        <div style="font-size:.75rem;color:var(--muted);margin-bottom:.25rem" id="quiz-category">Quiz</div>
+        <h2 id="quiz-title-modal">Quiz</h2>
+      </div>
+      <button class="close-btn" onclick="closeQuiz()">✕</button>
+    </div>
+    <div id="quiz-body"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-container" id="toast-container"></div>
+<link rel="stylesheet" href="script.js">
+
+</body>
+</html>
