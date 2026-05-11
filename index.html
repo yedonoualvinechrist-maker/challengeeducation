@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#0d0d1a">
+  <title>EduBattle — Défie le monde</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     LOADER
+══════════════════════════════ -->
+<div class="loader-wrap" id="loader">
+  <div class="spinner"></div>
+  <p>Chargement...</p>
+</div>
+
+<!-- TOASTS -->
+<div id="toasts"></div>
+
+<!-- ══════════════════════════════
+     LANDING
+══════════════════════════════ -->
+<div id="screen-landing" class="screen active">
+  <nav class="landing-nav">
+    <div class="logo">EDU<span>BATTLE</span></div>
+    <div class="nav-btns">
+      <button class="btn btn-outline btn-sm" onclick="go('screen-login')">Connexion</button>
+      <button class="btn btn-primary btn-sm" onclick="go('screen-register')">S'inscrire</button>
+    </div>
+  </nav>
+  <div class="landing-hero fadein">
+    <div class="hero-badge">⚡ Plateforme de défis scolaires</div>
+    <h1 class="hero-title">
+      <div class="line1">DÉFIE</div>
+      <div class="line2">LE MONDE</div>
+    </h1>
+    <p class="hero-sub">
+      Révise en t'affrontant. Quiz, défis quotidiens, duels en direct.
+      Grimpe dans le classement mondial de ta classe.
+    </p>
+    <div class="hero-btns">
+      <button class="btn btn-primary" onclick="go('screen-register')">🚀 Créer mon compte gratuitement</button>
+      <button class="btn btn-outline" onclick="go('screen-login')">Me connecter</button>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="num" id="ls-users">0</div><div class="lbl">Élèves inscrits</div></div>
+      <div class="hstat"><div class="num" id="ls-duels">0</div><div class="lbl">Duels joués</div></div>
+      <div class="hstat"><div class="num" id="ls-quiz">0</div><div class="lbl">Quiz complétés</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     INSCRIPTION
+══════════════════════════════ -->
+<div id="screen-register" class="screen">
+  <div class="auth-page">
+    <div class="auth-box fadein">
+      <h2>Rejoins la bataille ⚡</h2>
+      <p class="sub">Crée ton compte — c'est gratuit</p>
+
+      <div class="input-row">
+        <div class="input-group">
+          <label>Pseudo</label>
+          <input type="text" id="r-pseudo" placeholder="ex: StarMath_225" maxlength="20">
+          <div class="err" id="e-pseudo"></div>
+        </div>
+        <div class="input-group">
+          <label>Pays</label>
+          <select id="r-pays">
+            <option value="">— Sélectionne —</option>
+            <optgroup label="🌍 Afrique de l'Ouest">
+              <option value="Bénin">Bénin</option>
+              <option value="Togo">Togo</option>
+              <option value="Sénégal">Sénégal</option>
+              <option value="Côte d'Ivoire">Côte d'Ivoire</option>
+              <option value="Mali">Mali</option>
+              <option value="Burkina Faso">Burkina Faso</option>
+              <option value="Niger">Niger</option>
+              <option value="Guinée">Guinée</option>
+              <option value="Ghana">Ghana</option>
+              <option value="Nigeria">Nigeria</option>
+            </optgroup>
+            <optgroup label="🌍 Afrique Centrale & Est">
+              <option value="Cameroun">Cameroun</option>
+              <option value="Congo">Congo</option>
+              <option value="RDC">RD Congo</option>
+              <option value="Gabon">Gabon</option>
+              <option value="Madagascar">Madagascar</option>
+              <option value="Rwanda">Rwanda</option>
+            </optgroup>
+            <optgroup label="🌍 Maghreb">
+              <option value="Maroc">Maroc</option>
+              <option value="Algérie">Algérie</option>
+              <option value="Tunisie">Tunisie</option>
+              <option value="Égypte">Égypte</option>
+            </optgroup>
+            <optgroup label="🌍 Europe">
+              <option value="France">France</option>
+              <option value="Belgique">Belgique</option>
+              <option value="Suisse">Suisse</option>
+            </optgroup>
+            <optgroup label="🌎 Autres">
+              <option value="Canada">Canada</option>
+              <option value="USA">USA</option>
+              <option value="Autre">Autre</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Classe / Filière</label>
+        <select id="r-classe">
+          <option value="">— Sélectionne ta classe —</option>
+          <optgroup label="🏫 Collège">
+            <option value="6ème">6ème</option>
+            <option value="5ème">5ème</option>
+            <option value="4ème">4ème</option>
+            <option value="3ème">3ème (Prépa BEPC)</option>
+          </optgroup>
+          <optgroup label="📚 Lycée Général">
+            <option value="2nde">Seconde</option>
+            <option value="1ère A">1ère A — Lettres</option>
+            <option value="1ère B">1ère B — Éco-Social</option>
+            <option value="1ère C">1ère C — Maths-Physique</option>
+            <option value="1ère D">1ère D — Maths-SVT</option>
+            <option value="Tle A">Terminale A</option>
+            <option value="Tle B">Terminale B</option>
+            <option value="Tle C">Terminale C</option>
+            <option value="Tle D">Terminale D</option>
+          </optgroup>
+          <optgroup label="🔧 Technique & Pro">
+            <option value="CAP">CAP</option>
+            <option value="BEP">BEP</option>
+            <option value="BAC Pro">BAC Professionnel</option>
+            <option value="BAC Tech">BAC Technologique</option>
+            <option value="BTS">BTS</option>
+          </optgroup>
+          <optgroup label="🎓 Supérieur">
+            <option value="Licence 1">Licence 1</option>
+            <option value="Licence 2">Licence 2</option>
+            <option value="Licence 3">Licence 3</option>
+            <option value="Master">Master</option>
+          </optgroup>
+        </select>
+        <div class="err" id="e-classe"></div>
+      </div>
+
+      <div class="input-row">
+        <div class="input-group">
+          <label>Email</label>
+          <input type="email" id="r-email" placeholder="ton@email.com">
+          <div class="err" id="e-email"></div>
+        </div>
+        <div class="input-group">
+          <label>Mot de passe</label>
+          <input type="password" id="r-mdp" placeholder="Min. 6 caractères">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Choisis ton avatar</label>
+        <div class="avatar-picker" id="av-grid"></div>
+      </div>
+
+      <div class="err" id="e-global" style="margin-bottom:.8rem;"></div>
+      <button class="btn btn-primary btn-block" id="btn-register" onclick="doRegister()">Créer mon compte ⚡</button>
+      <div class="auth-link">Déjà inscrit ? <a onclick="go('screen-login')">Se connecter</a></div>
+      <div class="auth-link"><a onclick="go('screen-landing')">← Retour</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     CONNEXION
+══════════════════════════════ -->
+<div id="screen-login" class="screen">
+  <div class="auth-page">
+    <div class="auth-box fadein">
+      <h2>Bon retour ! 👋</h2>
+      <p class="sub">Reprends là où tu t'es arrêté</p>
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" id="l-email" placeholder="ton@email.com">
+      </div>
+      <div class="input-group">
+        <label>Mot de passe</label>
+        <input type="password" id="l-mdp" placeholder="••••••••">
+      </div>
+      <div class="err" id="e-login"></div>
+      <button class="btn btn-primary btn-block" style="margin-top:.8rem" id="btn-login" onclick="doLogin()">Connexion</button>
+      <div class="auth-link">Pas encore inscrit ? <a onclick="go('screen-register')">Créer un compte</a></div>
+      <div class="auth-link"><a onclick="go('screen-landing')">← Retour</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     APP
+══════════════════════════════ -->
+<div id="screen-app" class="screen">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="tb-logo">EDU<span>BATTLE</span></div>
+    <div class="tb-right">
+      <div class="xp-pill">⚡ <span id="tb-xp">0</span> XP</div>
+      <div class="user-pill" onclick="openTab('profil')">
+        <span id="tb-av">🎮</span>
+        <span id="tb-name">—</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENU ONGLETS -->
+  <div class="app-body">
+
+    <!-- ACCUEIL -->
+    <div class="tab active" id="tab-home">
+      <div class="welcome-band">
+        <h2>Salut, <span id="d-name">—</span> ! 👋</h2>
+        <p>Prêt à dominer le classement aujourd'hui ?</p>
+        <div><span class="classe-pill" id="d-classe">—</span></div>
+        <div class="xp-bar-wrap">
+          <div class="xp-bar-row">
+            <span>Niveau <span id="d-lvl">1</span></span>
+            <span id="d-xp-txt">0 / 200 XP</span>
+          </div>
+          <div class="xp-bar"><div class="xp-fill" id="d-xp-fill" style="width:0%"></div></div>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card"><div class="sn" id="d-rank">#—</div><div class="sl">Rang</div></div>
+        <div class="stat-card"><div class="sn" id="d-streak">0</div><div class="sl">Série</div></div>
+        <div class="stat-card"><div class="sn" id="d-duels">0</div><div class="sl">Victoires</div></div>
+      </div>
+
+      <div class="daily-card" onclick="launchDaily()">
+        <div class="daily-tag">🔥 DÉFI DU JOUR</div>
+        <h3 id="daily-title">Chargement...</h3>
+        <p id="daily-desc">Le défi quotidien t'attend !</p>
+        <div class="daily-meta">
+          <span>⏱ 10 min</span>
+          <span>📝 5 questions</span>
+          <span id="daily-xp">🎯 +50 XP</span>
+        </div>
+      </div>
+
+      <div class="mini-rank-card">
+        <div class="mini-rank-title">🌍 Top 3 de ta classe (mondial)</div>
+        <div id="mini-rank">
+          <p class="empty-text">Sois le premier à t'inscrire dans ta classe !</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DÉFIS -->
+    <div class="tab" id="tab-defis">
+      <div class="section-head">
+        <h2>⚡ Défis</h2>
+        <div class="filter-row">
+          <div class="fbtn active" onclick="filterDef('tous', this)">Tous</div>
+          <div class="fbtn" onclick="filterDef('quiz', this)">📝 Quiz</div>
+          <div class="fbtn" onclick="filterDef('calcul', this)">🔢 Calcul</div>
+          <div class="fbtn" onclick="filterDef('logique', this)">🧠 Logique</div>
+        </div>
+      </div>
+      <div class="ch-list" id="ch-list"></div>
+    </div>
+
+    <!-- DUEL -->
+    <div class="tab" id="tab-duel">
+      <div class="duel-wrap">
+        <div class="duel-hd">
+          <h2>⚔️ Mode Duel</h2>
+          <p>Défie un élève réel inscrit sur la plateforme</p>
+        </div>
+        <div class="duel-box" id="duel-search-zone">
+          <div class="search-row">
+            <input type="text" id="duel-input" placeholder="Recherche un pseudo..." oninput="searchPlayers()">
+          </div>
+          <div id="duel-results"></div>
+          <p class="duel-hint">
+            💡 Seuls les élèves réellement inscrits apparaissent ici.
+            Invite tes amis pour remplir le classement !
+          </p>
+        </div>
+        <div id="duel-active-zone" style="display:none">
+          <div class="duel-box">
+            <div class="duel-arena-players" id="duel-arena-players"></div>
+            <div id="duel-qzone"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLASSEMENT -->
+    <div class="tab" id="tab-rank">
+      <div class="section-head"><h2>🏆 Classements</h2></div>
+      <div class="rank-tabs">
+        <button class="rtab active" onclick="showRank('mondial', this)">🌍 Mondial</button>
+        <button class="rtab" onclick="showRank('regional', this)">🌎 Régional</button>
+        <button class="rtab" onclick="showRank('local', this)">📍 Local</button>
+      </div>
+      <div class="rank-table" id="rank-table"></div>
+    </div>
+
+    <!-- PROFIL -->
+    <div class="tab" id="tab-profil">
+      <div class="prof-hero">
+        <div class="prof-av-big" id="p-av">🎮</div>
+        <div class="prof-info">
+          <h2 id="p-name">—</h2>
+          <div class="ps" id="p-classe">—</div>
+          <div class="ps" id="p-pays">—</div>
+          <div class="badges-row" id="p-badges"></div>
+        </div>
+      </div>
+      <div class="pstats">
+        <div class="pstat"><div class="pn" id="p-xp">0</div><div class="pl">XP Total</div></div>
+        <div class="pstat"><div class="pn" id="p-lvl">1</div><div class="pl">Niveau</div></div>
+        <div class="pstat"><div class="pn" id="p-quiz">0</div><div class="pl">Quiz</div></div>
+        <div class="pstat"><div class="pn" id="p-dw">0</div><div class="pl">Duels gagnés</div></div>
+        <div class="pstat"><div class="pn" id="p-streak">0</div><div class="pl">Série max</div></div>
+        <div class="pstat"><div class="pn" id="p-rank">—</div><div class="pl">Rang</div></div>
+      </div>
+      <button class="btn btn-outline btn-block" onclick="doLogout()">Se déconnecter</button>
+    </div>
+
+  </div><!-- /app-body -->
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <div class="bnav-item active" data-tab="home"   onclick="openTab('home')">  <div class="icon">🏠</div>Accueil</div>
+    <div class="bnav-item"        data-tab="defis"  onclick="openTab('defis')"> <div class="icon">⚡</div>Défis</div>
+    <div class="bnav-item"        data-tab="duel"   onclick="openTab('duel')">  <div class="icon">⚔️</div>Duel</div>
+    <div class="bnav-item"        data-tab="rank"   onclick="openTab('rank')">  <div class="icon">🏆</div>Classement</div>
+    <div class="bnav-item"        data-tab="profil" onclick="openTab('profil')"><div class="icon">👤</div>Profil</div>
+  </nav>
+</div>
+
+<!-- ══════════════════════════════
+     QUIZ MODAL
+══════════════════════════════ -->
+<div class="overlay" id="quiz-overlay">
+  <div class="modal">
+    <div class="modal-hd">
+      <div>
+        <div class="q-cat-label" id="q-cat">Quiz</div>
+        <h2 id="q-title">—</h2>
+      </div>
+      <button class="close-x" onclick="closeQuiz()">✕</button>
+    </div>
+    <div id="q-body"></div>
+  </div>
+</div>
+
+<!-- SCRIPTS -->
+<script src="app.js"></script>
+
+</body>
+</html>
